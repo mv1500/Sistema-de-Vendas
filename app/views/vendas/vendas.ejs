@@ -1,0 +1,75 @@
+<%- include('../_includes/topo'); %>
+
+
+	    <div class="container">
+	    	<div class="row">
+	    	<div class="col col-md-9 tituloInfo">
+	    		<h2>Vendas</h2>
+	    	</div>
+	    	<div class="col col-md-2 align-self-end">
+	    		<a href="/cad_venda" class="btn btn-primary">Nova venda</a>
+	    	</div>
+	    	</div>
+	    	<br>
+	    	<div class="row">
+	    		<div class="col-lg-10">
+	    			<span><h4>Qnt de vendas: <%= vendas.length %></h4></span>
+	    			<br>
+	    			<table class="table"> 
+	    					<thead>
+	    						<th>Produto</th>
+	    						<th>Cliente</th>
+	    						<th>Valor da venda</th>
+	    						<th>Data da venda</th>
+	    						<th colspan="2"></th>
+	    					</thead>                          
+                            <tbody>
+                            	<% if(vendas.length > 0){ %>
+			    				<% for(var i = 0; i < vendas.length; i++){ %>	
+                                <tr>
+                                    <td><a href="venda?id_venda=<%= vendas[i].id_venda %>"><%= vendas[i].nome_produto %></a></td>
+                                    <td>
+                                    	<%= vendas[i].nome_cliente %>
+                                    </td>
+                                    <td>
+                                    	<%= vendas[i].valor_total %>
+                                    </td>
+                                    <td>
+                                    	<%= vendas[i].data_compra %>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-primary btn-sm" href="/form_editar_venda?id_venda=<%= vendas[i].id_venda %>">Editar</a>
+                                    </td>                            
+                                    <td>
+                                    	<button class="btn btn-danger btn-sm" onclick="deleteVenda(<%= vendas[i].id_venda %>)">Excluir</button>
+                                    </td>
+                                </tr>
+                                <% } %>
+								<% } %>
+                            </tbody>
+                        </table>
+	    		</div>
+	    	</div>
+	    </div>
+	    		
+	
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+		<script type="text/javascript">
+			function deleteVenda(id_venda) {
+				var endereço = "/deleteVenda?id_venda= ";
+				var id = id_venda;
+				bootbox.confirm({
+                    size: "small",
+                    title: "Atenção",
+                    message: "Confirmar exclusão?",
+                    callback: function (result) {
+                        if (!result) return;
+                        window.location.href= endereço + id;
+                    }
+                });
+			}
+		</script>
+	
+	</body>
+</html>

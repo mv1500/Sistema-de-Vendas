@@ -1,0 +1,113 @@
+<!DOCTYPE HTML>
+<html lang="pt-br">
+	<head>
+		<meta charset="UTF-8">
+
+		<title>Sistema de Vendas</title>
+		
+		<!-- JQuery -->
+		<script src="js/jquery-2.2.1.js"></script>
+
+		<!-- bootstrap - link cdn -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	
+		<!-- incluindo css -->
+		<link href="css/style.css" rel="stylesheet">
+
+		<!-- favicon -->
+		<link rel="shortcut icon" href="" />
+	</head>
+
+	<body>
+
+		<nav class="navbar navbar-default navbar-static-top">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					
+					<h3>Sistema de Vendas</h3>
+				</div>
+
+				<div id="navbar" class="navbar-collapse collapse">
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="/">HOME</a></li>
+						<li><a href="/Vendas">Vendas</a></li>
+						<li><a href="/produtos">Produtos</a></li>
+						<li><a href="/clientes">Clientes</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+	<div class="container">	
+	    <div class="row">
+			<h2>Cadastro de clientes</h2>
+		</div>
+
+		<% if(validacao.length > 0){ %>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="alert alert-danger">
+						<strong>Atenção!</strong>
+						<ul>
+							<% for(var i = 0; i < validacao.length; i++){ %>
+							<li><%= validacao[i].msg %></li>
+							<% }%>
+						</ul>
+					</div>
+				</div>
+			</div>
+		<% }%>
+
+		<div class="row">
+			<div class="col col-md-8">
+				<form action="/cliente/salvar" method="post">
+					<div class="form-group">
+						<label>Cliente</label>
+						<input type="text" name="nome_cliente" class="form-control" required><br>
+
+						<label>Numero</label>
+						<input type="text" name="numero" class="form-control"><br>
+
+						<label>Email</label>
+						<input type="email" name="email" class="form-control"><br>
+
+						<label>Instagram</label>
+						<input type="text" name="instagram" class="form-control"><br>
+
+						<label>Data da primeira compra</label>
+						<input type="date" name="data_ingresso" id="data_ingresso" class="form-control" required><br>
+
+						<label>Outras informações</label>
+						<textarea name="outras_informacoes" class="form-control" rows="3"></textarea>
+
+					</div>				
+						<a href="/clientes" class="btn btn-danger">Voltar</a>
+						<input type="submit" value="Salvar" class="btn btn-primary">
+				</form>   
+			</div>
+		</div>   
+	</div>
+</div>   		
+
+		<script type="text/javascript">
+			$(document).ready(function(){
+				var today = new Date();
+				var dy = today.getDate().toString().padStart(2, '0');
+				var mt = (today.getMonth()+1).toString().padStart(2, '0');
+				var yr = today.getFullYear();
+				
+			  document.getElementById('data_ingresso').value = yr+"-"+mt+"-"+dy;
+			});
+		</script>		
+
+	
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+	
+	</body>
+</html>

@@ -1,0 +1,66 @@
+<%- include('../_includes/topo'); %>
+
+
+	    <div class="container">
+	    	<div class="row">
+	    	<div class="col col-md-9 tituloInfo">
+	    		<h2>Produtos</h2>
+	    	</div>
+	    	<div class="col col-md-2 align-self-end">
+	    		<a href="/cad_produto" class="btn btn-primary">Cadastrar produto</a>
+	    	</div>
+	    	</div>
+	    	<br>
+	    	<div class="row">
+	    		<div class="col-lg-10">
+	    			<span><h4>N° de produtos: <%= produtos.length %></h4></span>
+	    			<br>
+	    			<table class="table"> 
+	    					<thead>
+	    						<th>Produto</th>
+	    						<th>Valor</th>
+	    						<th colspan="2"></th>
+	    					</thead>                          
+                            <tbody>
+                            	<% if(produtos.length > 0){ %>
+			    				<% for(var i = 0; i < produtos.length; i++){ %>	
+                                <tr>
+                                    <td><a href="produto?id_produto=<%= produtos[i].id_produto %>"><%= produtos[i].nome_produto %></a></td>
+                                    <td>
+                                    	<%= produtos[i].valor %>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-primary btn-sm" href="/form_editar_produto?id_produto=<%= produtos[i].id_produto %>">Editar</a>
+                                    </td>                            
+                                    <td>
+                                    	<button class="btn btn-danger btn-sm" onclick="deleteProduto(<%= produtos[i].id_produto %>)">Excluir</button>
+                                    </td>
+                                </tr>
+                                <% } %>
+								<% } %>
+                            </tbody>
+                        </table>
+	    		</div>
+
+	    		
+	
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+		<script type="text/javascript">
+			function deleteProduto(id_produto) {
+				var endereço = "/deleteProduto?id_produto= ";
+				var id = id_produto;
+				bootbox.confirm({
+                    size: "small",
+                    title: "Atenção",
+                    message: "Confirmar exclusão?",
+                    callback: function (result) {
+                        if (!result) return;
+                        window.location.href= endereço + id;
+                    }
+                });
+			}
+		</script>
+	
+	</body>
+</html>

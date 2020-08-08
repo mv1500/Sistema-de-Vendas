@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<html lang="pt-br">
+	<head>
+		<meta charset="UTF-8">
+		
+		<title>Sistema de Vendas</title>
+		
+		<!-- JQuery -->
+		<script src="js/jquery-2.2.1.js"></script>
+
+		<!-- bootstrap - link cdn -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	
+		<!-- incluindo css -->
+		<link href="css/style.css" rel="stylesheet">
+
+		<script src="js/bootbox.min.js"></script>
+
+		<!-- favicon -->
+		<link rel="shortcut icon" href="" />
+	</head>
+
+	<body>
+
+		<nav class="navbar navbar-default navbar-static-top">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					
+					<h3>Sistema de Vendas</h3>
+				</div>
+
+				<div id="navbar" class="navbar-collapse collapse">
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="/">HOME</a></li>
+						<li><a href="/vendas">Vendas</a></li>
+						<li><a href="/produtos">Produtos</a></li>
+						<li><a href="/clientes">Clientes</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+
+	    <div class="container">
+	    	<div class="row">
+	    	<div class="col col-md-9 tituloInfo">
+	    		<h2>Lista de clientes</h2>
+	    	</div>
+	    	<div class="col col-md-2 align-self-end">
+	    		<a href="/cad_cliente" class="btn btn-primary">Cadastrar cliente</a>
+	    	</div>
+	    	</div>
+	    	<br>
+	    	<div class="row justify-content-center">
+	    		<div class="col-lg-10">
+	    			<span><h4>N° de clientes: <%= clientes.length %></h4></span>
+	    			<br>
+	    			<table class="table">  
+	    					<thead>
+	    						<th>Ciente</th>
+	    						<th colspan="2"></th>
+	    					</thead>                         
+                            <tbody>
+                            	<% if(clientes.length > 0){ %>
+			    				<% for(var i = 0; i < clientes.length; i++){ %>	
+                                <tr>
+                                    <td><a href="cliente?id_cliente=<%= clientes[i].id_cliente %>"><%= clientes[i].nome_cliente %></a></td>
+                                    <td>
+                                        <a class="btn btn-primary btn-sm" href="form_editar_cliente?id_cliente=<%= clientes[i].id_cliente %>">Editar</a>
+                                    </td>                            
+                                    <td>
+                                    	<button class="btn btn-danger btn-sm" onclick="deleteCliente(<%= clientes[i].id_cliente %>)">Excluir</button>
+                                    </td>
+                                </tr>
+                                <% } %>
+								<% } %>
+                            </tbody>
+                        </table>
+	    		</div>
+
+	    		
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+		<script type="text/javascript">
+			function deleteCliente(id_cliente) {
+				var endereço = "/deleteCliente?id_cliente= ";
+				var id = id_cliente;
+				bootbox.confirm({
+                    size: "small",
+                    title: "Atenção",
+                    message: "Confirmar exclusão?",
+                    callback: function (result) {
+                        if (!result) return;
+                        window.location.href= endereço + id;
+                    }
+                });
+			}
+		</script>
+	
+	</body>
+</html>
