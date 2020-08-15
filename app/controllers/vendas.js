@@ -1,6 +1,12 @@
 var dateFormat  = require('dateformat');
 
 module.exports.vendas =function(application, req, res) {
+
+	var msg = '';
+	if(req.query.msg != ''){
+		msg = req.query.msg;
+	}
+
 	var connection = application.config.dbConnection();
 
 	var vendasModel = new application.app.models.VendasDAO(connection);
@@ -8,13 +14,11 @@ module.exports.vendas =function(application, req, res) {
 	vendasModel.getVendas(function(error, result){
 		var vendasResult = result;
 
-		console.log(vendasResult);
-
 		vendasResult.forEach(element => { 
 		  element.data_compra = dateFormat(element.data_compra,"dd/mm/yyyy");
 		}); 
 
-		res.render('vendas/vendas', {vendas : vendasResult});
+		res.render('vendas/vendas', {vendas : vendasResult, msg : msg});
 	});	
 }
 
@@ -108,7 +112,7 @@ module.exports.salvarVenda = function(application, req, res) {
 		var vendasModel = new application.app.models.VendasDAO(connection);
 
 		vendasModel.salvarVenda(venda, function(error, result){
-			res.redirect('/vendas');
+			res.redirect('/vendas?msg=1');
 		});
 }
 

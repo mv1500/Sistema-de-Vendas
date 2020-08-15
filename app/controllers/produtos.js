@@ -1,12 +1,18 @@
 var dateFormat  = require('dateformat');
 
 module.exports.produtos =function(application, req, res) {
+
+	var msg = '';
+	if(req.query.msg != ''){
+		msg = req.query.msg;
+	}
+
 	var connection = application.config.dbConnection();
 
 	var produtosModel = new application.app.models.ProdutosDAO(connection);
 
 	produtosModel.getProdutos(function(error, result){
-		res.render('produtos/produtos', {produtos : result});
+		res.render('produtos/produtos', {produtos : result, msg : msg});
 	});
 	
 }
@@ -53,7 +59,7 @@ module.exports.produto_salvar = function(application, req, res) {
 		var produtosModel = new application.app.models.ProdutosDAO(connection);
 
 		produtosModel.salvarProduto(produto, function(error, result){
-			res.redirect('/produtos');
+			res.redirect('/produtos?msg=1');
 		});
 }
 

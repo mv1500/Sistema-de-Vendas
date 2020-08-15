@@ -54,9 +54,23 @@
 	    </div>
 	    		
 	
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+		
 
 		<script type="text/javascript">
+
+			$(document).ready(function(){
+				<% if( msg == 1) {%>
+					var dialog = bootbox.dialog({ 							
+							title: "Atenção!",
+							message: '<div style="padding-left: 10px;">Venda cadastrado com sucesso!<div>', 
+							closeButton: false							
+					});
+
+					setTimeout(function() { dialog.modal('hide');}, 3000);
+
+				<% }%>	
+			});
+
 			function deleteVenda(id_venda) {
 				var endereço = "/deleteVenda?id_venda= ";
 				var id = id_venda;

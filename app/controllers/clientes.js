@@ -1,12 +1,19 @@
 var dateFormat  = require('dateformat');
 
 module.exports.clientes =function(application, req, res) {
+
+	var msg = '';
+	if(req.query.msg != ''){
+		msg = req.query.msg;
+	}
+
 	var connection = application.config.dbConnection();
 
 	var clientesModel = new application.app.models.ClientesDAO(connection);
 
 	clientesModel.getClientes(function(error, result){
-		res.render('clientes/clientes', {clientes : result});
+
+		res.render('clientes/clientes', {clientes : result, msg : msg});
 	});
 	
 }
@@ -25,6 +32,29 @@ module.exports.cliente =function(application, req, res) {
 		clienteResult[0].data_ingresso = dateFormat(clienteResult[0].data_ingresso,"dd/mm/yyyy");
 
 		res.render('clientes/cliente', {cliente : clienteResult});
+	});	
+}
+
+module.exports.historicoCompras =function(application, req, res) {
+	var connection = application.config.dbConnection();
+
+	var vendasModel = new application.app.models.VendasDAO(connection);
+
+	var id_cliente = req.body;
+
+	console.log(id_cliente);
+
+	vendasModel.historicoCompras(id_cliente.id_cliente, function(error, result){
+
+		console.log(result);
+
+		var historicoResult = result;
+
+		historicoResult.forEach(element => { 
+		  element.data_compra = dateFormat(element.data_compra,"dd/mm/yyyy");
+		});		
+
+		res.render('clientes/historico_compras', {historico : historicoResult});
 	});	
 }
 
@@ -70,7 +100,8 @@ module.exports.cliente_salvar = function(application, req, res) {
 		var clientesModel = new application.app.models.ClientesDAO(connection);
 
 		clientesModel.salvarCliente(cliente, function(error, result){
-			res.redirect('/clientes');
+			console.log(result);
+			res.redirect('/clientes?msg=1');
 		});
 }
 

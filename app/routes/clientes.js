@@ -27,5 +27,9 @@ module.exports = function(application){
 	application.get('/deleteCliente', function(req, res){
 		application.app.controllers.clientes.deleteCliente(application, req, res);
 	});
+
+	application.post('/historicoCompras', function(req, res){
+		application.app.controllers.clientes.historicoCompras(application, req, res);
+	});
 };
 

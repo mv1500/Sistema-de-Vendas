@@ -10,6 +10,10 @@ VendasDAO.prototype.getVenda = function(id_venda, callback) {
 	this._connection.query('SELECT v.*, p.nome_produto, p.valor, c.nome_cliente FROM vendas AS v INNER JOIN produtos as p on (v.id_produto = p.id_produto) INNER join clientes as c ON (v.id_cliente = c.id_cliente) where id_venda = ' + id_venda.id_venda, callback);
 }
 
+VendasDAO.prototype.historicoCompras = function(id_cliente, callback) {
+	this._connection.query('SELECT v.*, p.nome_produto, p.valor, c.nome_cliente FROM vendas AS v INNER JOIN produtos as p on (v.id_produto = p.id_produto) INNER join clientes as c ON (v.id_cliente = c.id_cliente) where v.id_cliente = ' + id_cliente, callback);
+}
+
 VendasDAO.prototype.salvarVenda = function(venda, callback){
 	 	this._connection.query('insert into vendas set ? ', venda, callback);
 }

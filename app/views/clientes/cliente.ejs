@@ -9,11 +9,15 @@
 		</div>
 
 		<div class="row">
-			<div class="col col-lg-9">					
+			<div class="col col-lg-9">		
+			<div class="panel panel-default">	
+				<div class="panel-heading">	
+					<h3>Informações</h3>	
+				</div>
+	
+				<div class="panel-body">		
 				<table class="table table-striped table-hover table-lg">
-		            <thead>
-		            	<th colspan="2">Informações</th>
-		            </thead>
+		           
 		            <tbody>
 		            	<tr>
 		            		<th>Data da primeira compra</th>
@@ -32,13 +36,33 @@
 		                    <td><a href="<%= cliente[0].instagram %>" target="_blank"><%= cliente[0].instagram %></a></td>
 		                </tr>
 		                <tr>
+		                    <th>Quantidade de compras</th>
+		                    <td><%= cliente[0].produtos_comprados %></td>
+		                </tr>
+		                <tr>
 		                    <th>Outras informações</th>
 		                    <td><%= cliente[0].outras_informacoes %></td>
 		                </tr>
 		            </tbody>
 		        </table>
 	        </div>
+	        </div>
+	        </div>
+	    </div>	 
+	    <div class="row">
+	    	<div class="col col-lg-9">
+	    		<button class="btn btn-link" id="historico_compras">Historico de compras</button>
+	    	</div>
+	    </div>   
+
+	    <div class="row">
+	    	<div class="col col-lg-9">
+	    		<span id="vendas_result"></span>
+	    	</div>
 	    </div>
+
+	    <br>
+
         <div class="row">
         	<div class="col col-lg-9">
         		<a class="btn btn-link" href="/clientes">Voltar</a>
@@ -46,7 +70,25 @@
         </div>
 	</div>
 
-	    		
+	    <script>
+			$(document).ready( function(){				
+
+				var id_cliente = <%= cliente[0].id_cliente %>;
+
+				$('#historico_compras').click(function(){
+										
+					$.ajax({
+						url: '/historicoCompras',
+						method: "post",
+						data: {id_cliente: id_cliente},
+						success: function(data){
+							$('#vendas_result').html(data);
+						}
+					});
+				});
+
+			});
+		</script>		
 	
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 	
